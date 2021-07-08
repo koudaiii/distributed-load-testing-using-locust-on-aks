@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+while getopts g: OPT; do
+    case $OPT in
+    "g")
+        FLG_G="TRUE"
+        MYRESOURCE_GROUP_NAME="$OPTARG"
+        ;;
+    *)
+        echo "Usage: script/clean [-g MYRESOURCE_GROUP_NAME(Default: DistributedLoadTesting)]" 1>&2
+        exit 1
+        ;;
+    esac
+done
+
+if [ "$FLG_G" != "TRUE" ]; then
+    MYRESOURCE_GROUP_NAME=DistributedLoadTesting
+fi
+
+echo "az group delete --name $MYRESOURCE_GROUP_NAME --yes"
+az group delete --name $MYRESOURCE_GROUP_NAME --yes

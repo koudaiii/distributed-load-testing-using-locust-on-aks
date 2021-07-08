@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+  namespace: myapp
+  labels:
+    name: myapp
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+        - name: myapp
+          image: koudaiii/myapp #TODO: myapp
+          env:
+            - name: MYAPP_NAME
+              value: foo
+          # envFrom:
+          #   - secretRef:
+          #       name: dotenv
+          ports:
+            - name: myapp
+              containerPort: 1323
+              protocol: TCP
+          resources:
+            # You must specify requests for CPU to autoscale
+            # based on CPU utilization
+            requests:
+              cpu: 500m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi

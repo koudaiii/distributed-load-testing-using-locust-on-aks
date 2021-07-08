@@ -1,0 +1,44 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: locust-worker
+  namespace: locust
+  labels:
+    name: locust-worker
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: locust-worker
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        app: locust-worker
+    spec:
+      containers:
+        - name: locust-worker
+          image: koudaiii/locust #TODO: Please set your locust image
+          env:
+            - name: LOCUST_MODE
+              value: worker
+            - name: LOCUST_MASTER
+              value: locust-master
+            - name: TARGET_HOST
+              value: myapp.myapp.svc.cluster.local #TODO: Please set your service url.
+          # envFrom:
+          #  - secretRef:
+          #      name: dotenv
+          resources:
+            # You must specify requests for CPU to autoscale
+            # based on CPU utilization
+            requests:
+              cpu: 500m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi

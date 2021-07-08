@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust-master
+  namespace: locust
+  labels:
+    name: locust-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locust-master
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 50%
+      maxUnavailable: 50%
+  template:
+    metadata:
+      labels:
+        app: locust-master
+    spec:
+      containers:
+        - name: locust-master
+          image: koudaiii/locust #TODO: Please set your locust image
+          env:
+            - name: LOCUST_MODE
+              value: master
+            - name: TARGET_HOST
+              value: http://myapp.myapp.svc.cluster.local #TODO: Please set your target url.
+          # envFrom:
+          #   - secretRef:
+          #       name: dotenv
+          ports:
+            - name: loc-master-web
+              containerPort: 8089
+              protocol: TCP
+            - name: loc-master-p1
+              containerPort: 5557
+              protocol: TCP
+            - name: loc-master-p2
+              containerPort: 5558
+              protocol: TCP
+          resources:
+            # You must specify requests for CPU to autoscale
+            # based on CPU utilization
+            requests:
+              cpu: 500m
+              memory: 256Mi
+            limits:
+              cpu: 2000m
+              memory: 1024Mi

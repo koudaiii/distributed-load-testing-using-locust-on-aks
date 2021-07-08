@@ -1,0 +1,60 @@
+#!/bin/bash
+set -e
+
+while getopts g:a:l:c:s: OPT; do
+    case $OPT in
+    "g")
+        FLG_G="TRUE"
+        MYRESOURCE_GROUP_NAME="$OPTARG"
+        ;;
+    "a")
+        FLG_A="TRUE"
+        AKS_CLUSTER_NAME="$OPTARG"
+        ;;
+    "l")
+        FLG_L="TRUE"
+        LOCATION_NAME="$OPTARG"
+        ;;
+    "c")
+        FLG_C="TRUE"
+        NODE_COUNT="$OPTARG"
+        ;;
+    "s")
+        FLG_S="TRUE"
+        NODE_VM_SIZE="$OPTARG"
+        ;;
+    *)
+        echo "Usage: script/setup [-g MYRESOURCE_GROUP_NAME(Default: DistributedLoadTesting)] [-a AKS_CLUSTER_NAME(Default: LocustOnAKS)] [-l LOCATION_NAME(Default: eastus)] [-c NODE_COUNT(Default: 5)] [-s NODE_VM_SIZE(Default: Standard_DS3_v2)]" 1>&2
+        exit 1
+        ;;
+    esac
+done
+
+if [ "$FLG_G" != "TRUE" ]; then
+    MYRESOURCE_GROUP_NAME=DistributedLoadTesting
+fi
+
+if [ "$FLG_A" != "TRUE" ]; then
+    AKS_CLUSTER_NAME=LocustOnAKS
+fi
+
+if [ "$FLG_L" != "TRUE" ]; then
+    LOCATION_NAME=eastus
+fi
+
+if [ "$FLG_C" != "TRUE" ]; then
+    NODE_COUNT=5
+fi
+
+if [ "$FLG_S" != "TRUE" ]; then
+    NODE_VM_SIZE=Standard_DS3_v2
+fi
+
+echo "az group create --name $MYRESOURCE_GROUP_NAME --location $LOCATION_NAME"
+az group create --name $MYRESOURCE_GROUP_NAME --location $LOCATION_NAME
+
+echo "az aks create --resource-group $MYRESOURCE_GROUP_NAME --name $AKS_CLUSTER_NAME --node-count $NODE_COUNT --node-vm-size $NODE_VM_SIZE"
+az aks create --resource-group $MYRESOURCE_GROUP_NAME --name $AKS_CLUSTER_NAME --node-count $NODE_COUNT --node-vm-size $NODE_VM_SIZE
+
+echo "az aks get-credentials --resource-group $MYRESOURCE_GROUP_NAME --name $AKS_CLUSTER_NAME"
+az aks get-credentials --resource-group $MYRESOURCE_GROUP_NAME --name $AKS_CLUSTER_NAME

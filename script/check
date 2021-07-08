@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+MESSAGE=""
+if type "az" >/dev/null 2>&1; then
+    echo "az: ok"
+else
+    MESSAGE="Please install az command"
+fi
+
+if type "kubectl" >/dev/null 2>&1; then
+    echo "kubectl: ok"
+else
+    MESSAGE="$MESSAGE\nPlease install kubectl command"
+fi
+
+if [ "$MESSAGE" != "" ]; then
+    echo $MESSAGE
+    exit 1
+fi
+
+echo "az login"
+az login
