@@ -20,7 +20,7 @@ Table of Contents
     - [Use docker-compose](#use-docker-compose)
   - [Development](#development)
     - [Require](#require-1)
-    - [How to](#how-to)
+    - [How to customise](#how-to-customise)
   - [Contribution](#contribution)
   - [Author](#author)
   - [License](#license)
@@ -129,15 +129,16 @@ $ docker-compose up --build
 
 - `locust`
 
-### How to
+### How to customise
+
+- Copy this repository
+- Edit some task files(`locustfile.py` and `lib/`)
+- Run `locust` command, And open http://localhost:8089 .
+- Edit docker image name at `Makefile` and `kubernetes/` manifest files
+- create docker image and push docker image
 
 ```console
-$ locust
-# Edit some task files and run the following commands.
-```
-
-```console
-$ open http://localhost:8089
+make push
 ```
 
 ## Contribution
