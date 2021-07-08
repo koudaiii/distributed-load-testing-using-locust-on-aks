@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+echo "kubectl apply -f myapp/kubernetes/myapp-namespace.yaml"
+kubectl apply -f myapp/kubernetes/myapp-namespace.yaml
+
+echo "kubectl apply -f myapp/kubernetes"
+kubectl apply -f myapp/kubernetes

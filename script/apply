@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+echo "kubectl apply -f kubernetes/locust-namespace.yaml"
+kubectl apply -f kubernetes/locust-namespace.yaml
+
+echo "kubectl apply -f kubernetes/"
+kubectl apply -f kubernetes/

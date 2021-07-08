@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  target:
+    build: myapp/
+    ports:
+      - "1323:1323"
+  master:
+    build: .
+    ports:
+     - "8089:8089"
+    environment:
+      - LOCUST_MODE=master
+      - TARGET_HOST=http://172.17.0.1:1323
+
+  worker:
+    build: .
+    deploy:
+      replicas: 10
+    environment:
+      - LOCUST_MODE=worker
+      - LOCUST_MASTER=master
+      - TARGET_HOST=http://172.17.0.1:1323

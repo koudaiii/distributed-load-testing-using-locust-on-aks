@@ -1,0 +1,15 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: locust-hpa
+  namespace: locust
+  labels:
+    name: locust-hpa
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    apiVersion: apps/v1
+    name: locust-worker
+  minReplicas: 2
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 40

@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: myapp
+  namespace: myapp
+  labels:
+    app: myapp
+spec:
+  ports:
+    - port: 80
+      targetPort: myapp
+      protocol: TCP
+      name: myapp
+  selector:
+    app: myapp
+  type: LoadBalancer
