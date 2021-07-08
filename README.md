@@ -20,7 +20,7 @@ Table of Contents
     - [Use docker-compose](#use-docker-compose)
   - [Development](#development)
     - [Require](#require-1)
-    - [How to customise](#how-to-customise)
+    - [How to customize](#how-to-customize)
   - [Contribution](#contribution)
   - [Author](#author)
   - [License](#license)
@@ -129,7 +129,7 @@ $ docker-compose up --build
 
 - `locust`
 
-### How to customise
+### How to customize
 
 - Copy this repository
 - Edit some task files(`locustfile.py` and `lib/`)
