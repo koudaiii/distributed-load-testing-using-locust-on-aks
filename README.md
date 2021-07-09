@@ -10,8 +10,7 @@ Table of Contents
   - [Getting Started](#getting-started)
     - [1. Require](#1-require)
     - [2. Run Bootstrap script](#2-run-bootstrap-script)
-    - [3. Launch locust on your AKS](#3-launch-locust-on-your-aks)
-    - [4. How to use WebUI](#4-how-to-use-webui)
+    - [3. How to use WebUI](#3-how-to-use-webui)
   - [Example: using myapp](#example-using-myapp)
   - [Clean-up](#clean-up)
   - [How to use in local](#how-to-use-in-local)
@@ -49,13 +48,7 @@ $ script/bootstrap
 #    [-s NODE_VM_SIZE(Default: Standard_DS3_v2)]
 ```
 
-### 3. Launch locust on your AKS
-
-```console
-$ script/apply
-```
-
-### 4. How to use WebUI
+### 3. How to use WebUI
 
 ```console
 $ kubectl port-forward svc/locust-master 8089:8089 -n locust
